@@ -9,10 +9,21 @@
 	<script>
 
 $( document ).on( 'deviceready', function() {
-	console.log( 'Device ready jQuery' );
+
 	$( document ).ready(function() {
-		console.log( 'DOM ready' );
-	  $( 'body' ).html( 'HELLO World!' );
+		console.log("navigator.geolocation works well");
+		function onSuccess(position) {
+	         var element = document.getElementById('geolocation');
+	         element.innerHTML = 'Latitude: '  + position.coords.latitude      + '<br />' +
+	                             'Longitude: ' + position.coords.longitude     + '<br />' +
+	                             '<hr />'      + element.innerHTML;
+	     }
+		function onError(error) {
+	         alert('code: '    + error.code    + '\n' +
+	               'message: ' + error.message + '\n');
+	     }
+		var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
+	 
 	});
 });
 
@@ -22,7 +33,7 @@ $( document ).on( 'deviceready', function() {
 	</style>
 </head>
 <body>
-
+	<div id="geolocation"></div>
 
 	<script src="cordova.js"></script>
 </body>
